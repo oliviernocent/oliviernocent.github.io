@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="My description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>oliviernocent</title>
+
+  <link rel="icon" type="image/x-icon" href="../img/favicon/favicon.ico">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://kit.fontawesome.com/e22244f0a8.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li>
+        <a href="https://oliviernocent.github.io/">oliviernocent</a>
+      </li>
+      <li>
+        <a href="https://oliviernocent.github.io/about.html">&#x1F9D0;
+          <!-- &#x1F913; -->
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <header>
+    <h1>
+      A pianist named Chaos
+      <br>
+      <small>
+        <var>x</var><sub><var>n</var>+1</sub> = &rho; <var>x</var><sub><var>n</var></sub> ( 1 -
+        <var>x</var><sub><var>n</var></sub> )
+      </small>
+    </h1>
+  </header>
+
+  <main>
+
+    <p>
+      La <a href="https://fr.wikipedia.org/wiki/Suite_logistique" target="_blank">suite logistique</a>
+      a été utilisée pour modéliser l'évolution d'une population par le biologiste Robert May en 1976.
+      Le paramètre <span class="equation">&rho;</span> représente le taux de reproduction de la population.
+      Malgré son expression simple (i.e. un polynôme de degré 2), la fonction logistique présente un comportement
+      chaotique pour des valeurs de <span class="equation">&rho;</span> supérieures à 3,57.
+    </p>
+
+    <p>
+      Cette application permet d'écouter une composition musicale chaotique générée à partir de
+      différentes valeurs du paramètre <span class="equation">&rho;</span>. Tous mes remerciements
+      à Cyrille Collard (<em>aka</em> <a href="https://twitter.com/darkmolo" target="_blank">@darkmolo</a>)
+      dont l'expertise musicale aura permis de rendre cette composition chaotique consonante.
+    </p>
+
+    <form>
+      <button id="play" type="button" class="button is-info">
+        <i class="fa fa-play" aria-hidden="true"></i>
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <label>
+        <input id="auto" type="checkbox" checked>
+        auto
+      </label>
+      &nbsp;&nbsp;&nbsp;
+      <label>&rho;</label>
+      <input id="r" type="range" min="0" max="4" value="1.2" step="0.1" disabled>
+      <span id="rLabel">1.2</span>
+    </form>
+    </div>
+  </main>
+
+  <canvas id="canvas"></canvas>
+
+  <footer class="footer">
+    2014-2021 &copy; Université de Reims Champagne-Ardenne
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <!-- polyfill -->
+  <script src="lib/MIDI.js/inc/shim/Base64.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/inc/shim/Base64binary.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+  <!-- midi.js package -->
+  <script src="lib/MIDI.js/js/midi/audioDetect.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/js/midi/gm.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/js/midi/loader.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/js/midi/plugin.audiotag.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/js/midi/plugin.webaudio.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/js/midi/plugin.webmidi.js" type="text/javascript"></script>
+  <!-- utils -->
+  <script src="lib/MIDI.js/js/util/dom_request_xhr.js" type="text/javascript"></script>
+  <script src="lib/MIDI.js/js/util/dom_request_script.js" type="text/javascript"></script>
+
+  <script>
+    //var instrumentName = "electric_guitar_jazz";
+    //var instrumentName = "bird_tweet";
+    var instrumentName = "acoustic_grand_piano";
+
+    MIDI.loadPlugin({
+      soundfontUrl: "lib/MIDI.js/examples/soundfont/",
+      instrument: instrumentName,
+      onprogress: function (state, progress) {
+        console.log("onprogress", state, progress);
+      },
+      onsuccess: function () {
+        MIDI.programChange(0, MIDI.GM.byName[instrumentName].number);
+        MIDI.setVolume(0, 127);
+
+        draw();
+        update();
+      }
+    });
+
+    var playing = false;
+    var auto = true;
+
+    var step = 0;
+    var maxSteps = 20;
+    var level = [1.3, 2.3, 3.1, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0];
+    //var level = [1.3, 2.3,  3.1, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9,4.0];
+    var currentLevel = 0;
+
+    // definition de la gamme
+    var defScale = [[0, 2, 4, 5, 7, 9, 11],       // gamme majeur (DO)
+    [0, 2, 4, 7, 9],            // gamme penta majeur (DO)
+    [0, 3, 5, 7, 9],            // gamme penta mineure (DO)
+    [0, 3, 5, 6, 7, 9],          // gamme blues (DO)
+    [0, 2, 3, 5, 7, 8, 10],       // gamme mineure naturelle
+    [0, 2, 3, 5, 7, 8, 11],       // gamme mineure harmonique
+    [0, 2, 3, 5, 7, 9, 11],       // gamme mineure melodique
+    [0, 4, 7, 10],             // arpege C7 (DO7)
+    [0, 3, 7, 10]              // arpege Cm7
+
+
+
+
+    ];
+    //var defScale = [0,2,4,7,9] ; // gamme penta majeur (DO)
+    //var defScale = [0,3,5,7,9] ; // gamme penta mineure (DO)
+    //var defScale = [0,3,5,6,7,9] ; // gamme blues (DO)
+
+
+    // tempo: 340 BPM
+    var duration = 60000 / 340;
+
+    var r = 1.2;
+
+    var v = new Array();
+    v.push(0.4);
+    var size = 100;
+
+    var canvas = document.getElementById("canvas");
+
+    canvas.width = $(window).width();
+    canvas.height = 480;
+
+    var width = canvas.width;
+    var height = canvas.height;
+
+    var offset = width / size;
+
+    var ctx = canvas.getContext('2d');
+
+    // add linear gradient
+    var grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    // light blue
+    grd.addColorStop(0, 'rgb(22, 27, 34)');
+    // dark blue
+    grd.addColorStop(1, 'rgb(22, 27, 34)');
+
+
+    function F(x) { return r * x * (1 - x); }
+
+    // remapping sur une gamme defini par le tableau _scale
+    // p.e :: [0,2,4,5,7,9,11] pour une gamme de Do majeur
+    //  [0,2,4,7,9] pour une penta Majeur en Do
+    function remapChromToScale(_note, _scale) {
+
+      var idOctave = Math.floor(_note / _scale.length);
+      var idNote = _note - idOctave * _scale.length;
+
+      //console.log( _note,idNote,idOctave );
+      return _scale[idNote] + idOctave * 12;
+
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.rect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      for (var i = 0; i < v.length; i++) {
+        ctx.fillStyle = 'hsla(100,100%,100%,' + (v[i]) + ')';
+        ctx.beginPath();
+        ctx.arc(i * offset, (1 - v[i]) * height, 4, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+    }
+
+    function update() {
+      if (playing) {
+        if (auto) {
+          if (++step > maxSteps) {
+            step = 0;
+            maxSteps *= 1.2;
+
+            if (++currentLevel >= level.length) { currentLevel = 0; maxSteps = 20; }
+
+            $("#r").val(level[currentLevel]);
+            r = level[currentLevel];
+            $("#rLabel").text(r);
+          }
+        }
+
+        v.push(F(v[v.length - 1]));
+        if (v.length > 100) v.shift();
+
+        //          var note = Math.floor(v[v.length-1]*120)+7; // the MIDI note
+        idScale = 4;
+        var rangeOfNote = defScale[idScale].length * 3; //  correspond a n octave de tessiture
+        //var rangeOfNote = 15; //  correspond a n octave de tessiture
+
+        var note = Math.floor(v[v.length - 1] * rangeOfNote) + 24; // the MIDI note
+        // play the note
+        var newNote = remapChromToScale(note, defScale[idScale]);
+        MIDI.noteOn(0, newNote, 127, 0); // channel, note, velocity, delay
+        MIDI.noteOff(0, newNote, 0.75);
+
+        draw();
+      }
+
+      window.setTimeout(update, duration);
+    }
+
+    $("#play").on("click", function () {
+      playing = !playing;
+
+      if (playing)
+        $("#play").html("<i class=\"fa fa-pause\" aria-hidden=\"true\"></i>");
+      else
+        $("#play").html("<i class=\"fa fa-play\" aria-hidden=\"true\"></i>");
+    });
+
+    $("#auto").on("click", function () {
+      auto = !auto;
+      console.log(auto);
+
+      if ($("#r").attr("disabled"))
+        $("#r").removeAttr("disabled");
+      else
+        $("#r").attr("disabled", true);
+    });
+
+
+    $("#r").on("input change", function () {
+      r = this.value;
+      $("#rLabel").text(r);
+    });
+
+  </script>
+</body>
+
+</html>
