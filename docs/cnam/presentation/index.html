@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="Big Data, algorithms">
+    <meta name="author" content="Olivier Nocent">
+    <title>Transparency</title>
+    <!--link rel="stylesheet" href="reveal.js/css/reveal.css"-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/almost-white.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        menuSettings: {CHTMLpreview: false}
+      };
+    </script>
+    <!--script src="../MathJax-2.4/MathJax.js?config=TeX-AMS-MML_SVG"></script-->
+    <!--script src="../MathJax-2.6/MathJax.js"></script-->
+    <!--script src="../MathJax-2.6/MathJax.js?config=TeX-MML-AM_SVG"></script-->
+    <!--script src="../MathJax-2.6/MathJax.js?config=TeX-AMS_SVG"></script-->
+    <!--script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script-->
+    <!--script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script-->
+    <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section data-background="img/playtime.jpg">
+          <h1 class="background">Vers une société de la transparence</h1>
+          <h2 class="background">progrès ou danger ?</h2>
+          <br>
+          <code class="background">olivier.nocent@univ-reims.fr</code>
+        </section>
+
+
+        <section>
+          <p>
+            <strong>Big Data</strong>&nbsp;&nbsp;&nbsp;
+            <img src="img/280px-Facebook_like_thumb.png" height="50">&nbsp;&nbsp;&nbsp;
+            géolocalisation&nbsp;&nbsp;&nbsp;
+            vie&nbsp;privée&nbsp;&nbsp;&nbsp;profilage&nbsp;&nbsp;&nbsp;
+            <img src="img/follow.png">&nbsp;&nbsp;&nbsp;
+            <strong>Data&nbsp;Brokers</strong>&nbsp;&nbsp;&nbsp;
+            entrepôts de données&nbsp;&nbsp;&nbsp;
+            fermes de calcul&nbsp;&nbsp;&nbsp;
+            <strong>Algorithmes</strong>&nbsp;&nbsp;&nbsp;
+            intelligence&nbsp;artificielle&nbsp;&nbsp;&nbsp;
+            Deep&nbsp;Learning&nbsp;&nbsp;&nbsp;
+            notifications&nbsp;&nbsp;&nbsp;
+            recommandations&nbsp;&nbsp;&nbsp;
+            <img src="img/google.png" height="50">
+            <img src="img/apple.png" height="50">
+            <img src="img/facebook.png" height="50">
+            <img src="img/amazon.jpg" height="50">&nbsp;&nbsp;&nbsp;
+            eRéputation&nbsp;&nbsp;&nbsp;
+            <strong>Internet des Objets</strong>&nbsp;&nbsp;&nbsp;
+            domotique&nbsp;&nbsp;&nbsp;
+            Smart Cities&nbsp;&nbsp;&nbsp;
+            <strong>Soi&nbsp;quantifié</strong>&nbsp;&nbsp;&nbsp;
+            eSanté&nbsp;&nbsp;&nbsp;
+            Netocratie&nbsp;&nbsp;&nbsp;
+            bulles filtrantes
+          </p>
+        </section>
+
+
+        <section data-background-iframe="https://www.franceinter.fr/emissions/le-billet-de-frederic-beigbeder/le-billet-de-frederic-beigbeder-06-octobre-2016">
+          <br>
+          <br>
+          <audio class="fragment" data-src="audio/billet-beigbeder.mp3" controls></audio>
+        </section>
+
+
+        <section>
+          <h2>Internet des objets</h2>
+          <p class="left">
+            Extension d'Internet à des choses et à des lieux du monde physique.
+          </p>
+
+          <ul class="left">
+            <li>Diminution des zones blanches</li>
+            <li><a href="https://www.solveforx.com/loon/">Project Loon</a> de la société X (Google Labs X)</li>
+          </ul>
+          <p class="left">
+            Épuisement des adresses IPv4 (32 bits), passage à IPv6 (128 bits)
+          </p>
+        </section>
+
+
+        <section>
+          <h2>Internet des objets</h2>
+          <ul>
+            <li>
+              <a href="http://teddytheguardian.com/" target="_blank">
+                Teddy the Guardian
+              </a>
+            </li>
+            <li>
+              <a href="https://www.weenect.com/fr/balise-gps-enfant-weenect-kids" target="_blank">
+                Weenect kids, le traceur GPS pour enfant
+              </a>
+            </li>
+            <li>
+              <a href="https://www.weenect.com/fr/collier-gps-pour-chien-chat-weenect-pets.html" target="_blank">
+                Weenect Pets, le collier GPS pour chien
+              </a>
+            </li>
+            <li>
+              <a href="https://www.spectacles.com/" target="_blank">
+                Snapchat Spectacles
+              </a>
+            </li>
+            <li>
+              <a href="https://www.edf.fr/entreprises/le-nouveau-compteur-linky-sup-tm-sup-arrive" target="_blank">
+                Compteur électrique LINKY<sup>&trade;</sup>
+              </a>
+            </li>
+            <li>
+              <a href="https://nest.com/fr/" target="_blank">
+                Thermostat nest
+              </a>
+            </li>
+            <li><a href="https://www.hapi.com/product/hapifork" target="_blank">HAPIfork: mangez mieux</a></li>
+            <li>...</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Internet des (nano-)objets</h2>
+          <p class="left">Peinture connectée : pigments contrôlés à l'aide d'un smartphone (Lexus)</p>
+
+          <p class="left">
+            Prix Nobel de chimie 2016 décerné à Jean-Pierre Sauvage <em>et al</em> pour
+            ses travaux sur les <q>machines moléculaires</q>.
+          </p>
+
+          <p class="left"><strong>Everyware</strong>: in every place, in every thing<br>Adam Greenfield</p>
+        </section>
+
+        <section>
+          <blockquote>
+            <q>
+              Le parti pouvait mettre à nu les plus petits détails de tout ce que l'on avait dit et pensé,
+              mais les profondeurs de votre cœur, dont les mouvements étaient mystérieux, même pour vous,
+              demeuraient inviolables.
+            </q>
+          </blockquote>
+          <p class="left">
+            <cite>1984, G. Orwell</cite>
+          </p>
+          <p class="left">
+            <a href="https://www.fitbit.com/fr/surge" target="_blank">fitbit</a>&nbsp;&nbsp;
+            <a href="https://jawbone.com/fitness-tracker/up3" target="_blank">JAWBONE</a>&nbsp;&nbsp;
+            <a href="https://www.pebble.com/new?gclid=CKWItq7oyc8CFfMW0wod1zYIGg" target="_blank">pebble</a>
+          </p>
+        </section>
+
+        <section>
+          <h2>Big Data</h2>
+          <p class="left">
+            Données massives, difficiles à traiter avec les outils classiques des bases de données.
+          </p>
+
+          <p class="left">Confluence des données</p>
+          <dl class="left">
+            <dt>Signaux</dt>
+            <dd>communications : courriel, téléphone, SMS, tweet, statut facebook, ...</dd>
+            <dt>Traces</dt>
+            <dd>paiement carte bancaire, coordonnées GPS, vidéosurveillance, données physiologiques, ...</dd>
+          </dl>
+        </section>
+
+
+        <section>
+          <h2>Quantification du monde</h2>
+
+          <p class="left">Numérisation de l'information</p>
+          <ul>
+            <li>Instauration d'équivalence, corrélations</li>
+            <li>Perte de relief et de hiérarchie</li>
+          </ul>
+
+          <p class="left">
+            <br>
+            Vision atomiste d'une science universelle, parfaitement déterminée, finalement
+            close et mesurable en tout. (Laplace, XVIII<sup>e</sup> siècle)
+          </p>
+        </section>
+
+
+        <section>
+          <h2>Algorithmes</h2>
+
+          <p class="left">
+            L'intelligence artificielle vise à résoudre des problèmes complexes sans
+            intervention humaine.
+          </p>
+
+          <p class="left"><br>Étape de raffinage/filtration du nouvel or noir (Big&nbsp;Data)</p>
+        </section>
+
+
+        <section>
+          <h2>Systèmes experts</h2>
+
+          <p class="left">
+            Raisonnement appliqué à la logique des propositions (<em>modus ponens</em>)
+          </p>
+
+          <p class="left">
+            $$A \land ( A \rightarrow B ) \therefore B$$
+          </p>
+
+          <ul class="left">
+            <li>
+              Suppose la création d'ontologies (ensembles structurés de concepts et de connaissances) avec
+              l'aide d'experts du domaine
+            </li>
+            <li>
+              Cadre fermé et non ambigü
+            </li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>Réseaux bayésiens</h2>
+
+          <p class="left">
+            Théorème de Bayes (1763) : <em>formule à remonter le temps</em>
+          </p>
+          <p>
+            $$\mathbb{P}(B \mid A)=\frac{\mathbb{P}(A \mid B)\mathbb{P}(B)}{\mathbb{P}(A)}$$
+          </p>
+
+          <ul class="left">
+            <li>
+              Aucun modèle <em>a priori</em>
+            </li>
+            <li>
+              Cadre ouvert et non déterministe (ambiguité = degré de confiance)
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Descartes vs. Siri</h2>
+
+          <p class="left">
+            Inférence vs. <em>Machine Learning</em><br>
+          </p>
+
+          <p class="left">
+            Modélisation vs. <em>Big Data</em><br>
+          </p>
+
+          <p class="left">
+            Échantillon représentatif vs. profilage individualisé
+          </p>
+        </section>
+
+        <section data-background="img/siri.png">
+          <div class="fragment">
+            <blockquote class="background">
+              <q>
+                There is no such thing as a free lunch
+              </q>
+            </blockquote>
+            <p class="fragment background left">Milton Friedman</p>
+          </div>
+          <div class="fragment">
+            <blockquote class="background">
+              <q>
+                if you're not paying for the product, you are the product?
+              </q>
+            </blockquote>
+            <p class="background left">Anonyme</p>
+          </div>
+        </section>
+
+
+        <section>
+          <h2>Digital labor</h2>
+          <blockquote>
+            <q>
+              Ils déposeront leur liberté à nos pieds et nous diront :
+              faites de nous vos esclaves, mais nourrisez-nous
+            </q>
+          </blockquote>
+          <p class="left">
+            Les frères Karamazov, F. Dostoïevski
+          </p>
+        </section>
+
+
+        <section>
+          <h2>Optimisation du monde</h2>
+
+          <p class="left">
+            Smart cities vs. <em>Agora</em><br>
+          </p>
+
+          <p class="left">
+            Politiques publiques vs. <em>déréglementation</em><br>
+          </p>
+
+          <p class="left">
+            Utopie vs. <em>déterminisme social</em><br>
+          </p>
+        </section>
+
+        
+        <section data-background="img/pebble-congrats1.jpg">
+        </section>
+
+        
+        <section data-background="img/pebble-congrats2.jpg">
+        </section>
+      </div>
+    </div>
+    <!--
+<script src="reveal.js/lib/js/head.min.js"></script>
+<script src="reveal.js/js/reveal.js"></script>
+-->
+
+    <!--script src="reveal.js/lib/js/head.min.js"></script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js"></script>
+    <!--script src="reveal.js/js/reveal.js"></script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js"></script>
+    <script>
+      MathJax.Hub.Config ({
+        //jax: ['input/TeX', 'output/SVG'],
+        //menuSettings: {zoom: 'Click'}
+        //menuSettings: {CHTMLpreview: false},
+        //displayAlign: 'center',
+        //displayIndent: '0em',
+        //SVG: {font: 'TeX'},
+        tex2jax: {preview: 'none'},
+      });
+    </script>
+    <script>
+      Reveal.initialize();
+
+      Reveal.addEventListener ('ready', function (e) {
+        var id = e.currentSlide.id;
+        MathJax.Hub.Rerender (id);
+      });
+
+      Reveal.addEventListener ('slidechanged', function (e) {
+        var id = e.currentSlide.id;
+        MathJax.Hub.Rerender (id);
+      });
+    </script>
+    <!--
+<script>
+function initialize() {
+console.log("Hey you!");
+
+Reveal.initialize({
+
+// other options ...
+
+math: {
+mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+},
+
+dependencies: [
+{ src: 'plugin/math/math.js', async: true }
+]
+
+});  
+}
+
+//window.addEventListener("load", initialize, false);
+window.setTimeout(initialize, 1000);
+</script>
+-->
+  </body>
+</html>
